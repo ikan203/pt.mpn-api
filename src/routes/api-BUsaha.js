@@ -2,7 +2,7 @@ import express from "express";
 import BUController, { updatePotoBU } from '../controllers/bidang-usaha-controller.js';
 import { authMiddleware } from "../middleware/auth-middleware.js";
 import { validationBU } from "../validations/bidang-usaha-validation.js";
-import { PotoBUMiddleware } from "../middleware/poto-bu-middleware.js";
+import { upload } from "../middleware/multer-middleware.js";
 
 const BURouter = express.Router();
 
@@ -15,7 +15,7 @@ BURouter.get('/foto/:id', upload("poto") /* Memanggil middleware upload poto*/, 
 BURouter.post(
     '/add', 
     validationBU,
-    PotoBUMiddleware("poto"),
+    upload("poto"),
     BUController.createBidangUsaha
 );
 
@@ -27,7 +27,7 @@ BURouter.put(
 
 BURouter.put(
     '/foto/:id',
-    PotoBUMiddleware("poto"),        // Memanggil middleware upload poto
+    upload("poto"),        // Memanggil middleware upload poto
     BUController.updatePotoBU
 );
 

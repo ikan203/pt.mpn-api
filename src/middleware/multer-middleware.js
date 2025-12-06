@@ -31,8 +31,12 @@ const fileFilter = (req, file, cb) => {
     cb (null, true);
 };
 
-export const upload = multer({
-    storage,
-    fileFilter,
-    limits: { fileSize: 5 * 1024 * 1024 } //5MB
-}).single('image');
+// Middleware upload yang dipakai di route
+export const upload = (fieldName) => //dibuat dinamis
+  multer({
+    storage,        // pakai konfigurasi folder & nama file
+    fileFilter,     // pakai filter tipe file
+    limits: {
+      fileSize: 5 * 1024 * 1024   // Maksimal ukuran file 5MB
+    }
+  }).single(fieldName);          // Hanya menerima 1 file
